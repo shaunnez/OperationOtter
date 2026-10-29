@@ -48,8 +48,9 @@ export const street = {
   /** Seconds into the walk clip when the warm flash into the bar starts */
   walkEndAt: 9.0,
   /** Horizontal slice that must always be on screen (otter → door) */
-  keepVisible: { x0: 6, x1: 98 },
-  focusX: 52,
+  /** Kept narrow enough (≈80%) that a normal portrait phone fills edge to edge with no blurred bands */
+  keepVisible: { x0: 14, x1: 94.5 },
+  focusX: 54.25,
   door: { x: 87, y: 47, w: 18, h: 38 },
   /** Blank sign board above the door: its four corners (TL, TR, BR, BL), so the neon sits in perspective */
   sign: [
@@ -67,41 +68,37 @@ export const street = {
 }
 
 export const bar = {
-  image: { src: asset('/assets/bar.webp'), w: 1586, h: 2048 } as SceneImage,
-  /** Optional ambient loop over the still, e.g. asset('/assets/bar-loop.mp4') */
-  loopVideo: '',
+  /** First frame of the loop, so the still → video hand-off is seamless.
+   *  (The previous wider still is in assets-raw/bar_old_still.webp.) */
+  image: { src: asset('/assets/bar.webp'), w: 1080, h: 1920 } as SceneImage,
+  /** Seamless 9s loop: candles, mirror ball, jukebox, TV, fish, goose */
+  loopVideo: asset('/assets/bar-loop.mp4'),
   /** Where the pan starts (% of image width at screen centre) */
-  focusX: 42,
-  /** Blank chalkboard on the right wall: corners TL, TR, BR, BL */
-  chalkboard: [
-    [77.7, 26.6],
-    [96.2, 25.1],
-    [96.5, 45.0],
-    [77.7, 45.2],
-  ] as [number, number][],
+  focusX: 45,
+  /** Blank chalkboard to write the menu on: corners TL, TR, BR, BL.
+   *  null = no board in frame (the loop clip only shows its edge). */
+  chalkboard: null as [number, number][] | null,
   hotspots: [
-    { id: 'photos', x: 28, y: 31, label: 'Photo wall', side: 'right' },
-    { id: 'tv', x: 61.5, y: 25.5, label: 'Old TV', side: 'right' },
+    { id: 'photos', x: 29, y: 31, label: 'Photo wall', side: 'right' },
+    { id: 'tv', x: 70.5, y: 25.5, label: 'Old TV', side: 'left' },
     { id: 'jukebox', x: 8, y: 47, label: 'Jukebox', side: 'right' },
-    { id: 'backroom', x: 63, y: 48, label: 'Back room', side: 'left' },
-    { id: 'menu', x: 80, y: 48.5, label: 'Menu', side: 'right' },
-    { id: 'booth', x: 82, y: 57, label: 'Back booth', side: 'left' },
-    { id: 'casefile', x: 19, y: 62.5, label: 'Case file', side: 'right' },
-    { id: 'fish', x: 29.5, y: 54.5 },
-    { id: 'goose', x: 44.5, y: 52 },
+    { id: 'backroom', x: 75, y: 38, label: 'Back room', side: 'left' },
+    { id: 'menu', x: 95, y: 31, label: 'Menu', side: 'left' },
+    { id: 'booth', x: 91, y: 60, label: 'Back booth', side: 'left' },
+    { id: 'casefile', x: 24, y: 65, label: 'Case file', side: 'right' },
+    { id: 'fish', x: 41, y: 55 },
+    { id: 'goose', x: 63, y: 52 },
   ] as HotspotDef[],
   glows: [
-    { x: 7.5, y: 63, r: 5, color: '255,170,70', kind: 'candle', strength: 0.9 },
-    { x: 40, y: 60, r: 4, color: '255,170,70', kind: 'candle', strength: 0.6 },
-    { x: 14.5, y: 13, r: 9, color: '255,175,90', kind: 'lamp', strength: 0.5 },
-    { x: 22, y: 20, r: 7, color: '255,175,90', kind: 'lamp', strength: 0.45 },
-    { x: 88.5, y: 13, r: 7, color: '255,175,90', kind: 'lamp', strength: 0.45 },
-    { x: 96.5, y: 54, r: 6, color: '255,170,80', kind: 'lamp', strength: 0.6 },
-    { x: 83, y: 48, r: 4, color: '255,170,80', kind: 'lamp', strength: 0.5 },
-    { x: 13.5, y: 33, r: 6, color: '255,60,80', kind: 'lamp', strength: 0.5 },
-    { x: 7, y: 48, r: 13, color: '255,50,160', kind: 'neon', strength: 0.55 },
-    { x: 61.5, y: 25, r: 8, color: '150,190,255', kind: 'screen', strength: 0.5 },
-    { x: 63, y: 41.5, r: 4, color: '255,40,60', kind: 'neon', strength: 0.6 },
+    { x: 8.5, y: 67, r: 6, color: '255,170,70', kind: 'candle', strength: 0.8 },
+    { x: 13, y: 11, r: 9, color: '255,175,90', kind: 'lamp', strength: 0.45 },
+    { x: 23, y: 18, r: 7, color: '255,175,90', kind: 'lamp', strength: 0.4 },
+    { x: 77.5, y: 17, r: 6, color: '255,175,90', kind: 'lamp', strength: 0.4 },
+    { x: 96.5, y: 47, r: 5, color: '255,170,80', kind: 'lamp', strength: 0.5 },
+    { x: 13, y: 32, r: 6, color: '255,60,80', kind: 'lamp', strength: 0.45 },
+    { x: 7, y: 47, r: 13, color: '255,50,160', kind: 'neon', strength: 0.5 },
+    { x: 71, y: 26, r: 9, color: '150,190,255', kind: 'screen', strength: 0.4 },
+    { x: 71, y: 40.5, r: 4, color: '255,40,60', kind: 'neon', strength: 0.55 },
   ] as Glow[],
-  discoBall: { x: 45.5, y: 16, r: 6.5 },
+  discoBall: { x: 53.5, y: 15, r: 8.5 },
 }

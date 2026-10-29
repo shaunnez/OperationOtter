@@ -78,7 +78,8 @@ img {
   isolation: isolate;
 }
 
-@media (min-width: 640px) {
+/* Desktop only (mouse + wide screen): show it in a phone frame. Phones and tablets always go full screen. */
+@media (min-width: 640px) and (hover: hover) and (pointer: fine) {
   body {
     background:
       radial-gradient(60% 50% at 30% 20%, rgba(255, 61, 127, 0.12), transparent 70%),
@@ -129,6 +130,9 @@ img {
 .stage__box {
   position: absolute;
   transform-origin: var(--origin, 50% 50%);
+  /* Glows and pulse rings near the edge mustn't make the bar pan past the picture */
+  overflow: hidden;
+  overflow: clip;
 }
 .stage__box--feather {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);

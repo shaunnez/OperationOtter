@@ -107,6 +107,7 @@ export function Bar({ now, onLeave }: { now: Date; onLeave: () => void }) {
       >
         <Glows glows={bar.glows} />
         <DiscoBall {...bar.discoBall} />
+        {bar.chalkboard && (
         <OnSurface corners={bar.chalkboard as [Pt, Pt, Pt, Pt]} w={300} h={385} className="chalk">
           <p className="chalk__head">Danny Doolans</p>
           <ul className="chalk__menu">
@@ -118,6 +119,7 @@ export function Bar({ now, onLeave }: { now: Date; onLeave: () => void }) {
           </ul>
           <p className="chalk__foot">Good drinks · questionable people</p>
         </OnSurface>
+        )}
         <Haze />
         {bar.hotspots.map((h, i) => {
           const s = spotFor(h)

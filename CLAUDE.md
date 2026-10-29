@@ -35,6 +35,7 @@ The site lives under a sub-path, so **never hard-code `/assets/...` into the DOM
 - `src/content/walk-track.json`: camera track (optical flow) for the walk clip so the neon sign follows its push-in. Regenerate it if `street-walk.mp4` is replaced (OpenCV LK flow → similarity transform per 2 frames: `[t, scale, rotDeg, txFrac, tyFrac]`).
 - `src/lib/time.ts` and `src/lib/gating.ts`: NZ time and the unlock schedule. Progress is kept in localStorage (`src/lib/progress.ts`).
 - `src/scenes/`: Street (idle loop → walk clip → flash) and Bar (pannable, hotspots, chalk menu). `src/overlays/` holds the sheets. `src/ui/TimeMachine.tsx` is the test-mode panel.
+- Bar: `public/assets/bar-loop.mp4` (seamless 9s loop, 1080×1920) over `bar.webp` (its first frame). The wall chalkboard is out of frame in the clip, so `bar.chalkboard` is `null` and the Menu hotspot sits on the board's edge. The old wider still is in `assets-raw/bar_old_still.webp`.
 - `ASSETS.md`: generation prompts for the art and clips.
 
 ## Design rules (from Shaun)
@@ -47,7 +48,6 @@ The site lives under a sub-path, so **never hard-code `/assets/...` into the DOM
 
 ## Still to come from Shaun (as of 29 Oct)
 
-- Bar loop clip (Higgsfield, start frame `assets-raw/bar_still_2x.png`, locked camera)
 - Real clues and answers
 - Wednesday:
   - Nomiya booking time (484 New North Road, Kingsland)
