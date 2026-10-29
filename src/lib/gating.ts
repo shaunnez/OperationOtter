@@ -1,4 +1,4 @@
-import { days, memories, reveals, songs, videos } from '../content/content'
+import { days, albums, reveals, songs, videos } from '../content/content'
 import type { Day, NzTime, RevealId } from '../content/types'
 import { nz } from './time'
 
@@ -54,7 +54,7 @@ export function dayForTime(t: NzTime): number {
 
 export const counts = (now: Date) => ({
   songs: songs.filter((s) => isOpen(s.unlockAt, now)).length,
-  memories: memories.filter((s) => isOpen(s.unlockAt, now)).length,
+  albums: albums.filter((s) => isOpen(s.unlockAt, now)).length,
   videos: videos.filter((s) => isOpen(s.unlockAt, now)).length,
 })
 

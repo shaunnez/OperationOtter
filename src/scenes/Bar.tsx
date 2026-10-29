@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { days, eggs, lines, memories, reveals, songs, videos } from '../content/content'
+import { days, eggs, lines, albums, reveals, songs, videos } from '../content/content'
 import { bar, type HotspotDef } from '../content/scenes'
 import type { NzTime, RevealId } from '../content/types'
 import { DiscoBall, Glows, Grain, Haze } from '../fx/Atmosphere'
@@ -65,7 +65,7 @@ export function Bar({ now, onLeave }: { now: Date; onLeave: () => void }) {
       case 'jukebox':
         return collection(songs, 'song', 'The jukebox', { kind: 'jukebox' })
       case 'photos':
-        return collection(memories, 'memory', 'The photo wall', { kind: 'photos' })
+        return collection(albums, 'album', 'The photo wall', { kind: 'photos' })
       case 'tv':
         return collection(videos, 'video', 'The old TV', { kind: 'tv' })
       case 'casefile': {

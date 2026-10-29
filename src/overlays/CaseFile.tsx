@@ -138,8 +138,8 @@ function rewardAction(day: Day): Overlay {
       return { kind: 'jukebox', songId: r.id }
     case 'video':
       return { kind: 'tv', videoId: r.id }
-    case 'memory':
-      return { kind: 'photos' }
+    case 'album':
+      return { kind: 'photos', albumId: r.id }
     case 'reveal':
       return { kind: 'reveal', id: r.id }
   }

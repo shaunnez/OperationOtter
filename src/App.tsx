@@ -7,6 +7,12 @@ import { ambience } from './lib/ambience'
 import { timeTravelAllowed } from './lib/time'
 import { TimeMachine } from './ui/TimeMachine'
 import { useNow } from './lib/useNow'
+import { barMusic, useBarMusicOn } from './lib/barMusic'
+import { BarMusic } from './ui/BarMusic'
+import { config, songs } from './content/content'
+import { isOpen } from './lib/gating'
+
+const barSong = songs.find((s) => s.id === config.barSong)
 
 type Scene = 'street' | 'bar'
 type HistState = { scene: Scene; depth: number }
@@ -15,6 +21,7 @@ export default function App() {
   const [scene, setScene] = useState<Scene>('street')
   const [stack, setStack] = useState<Overlay[]>([])
   const now = useNow(1000)
+  const musicOn = useBarMusicOn()
   const stackRef = useRef(stack)
   stackRef.current = stack
   const sceneRef = useRef(scene)
@@ -34,6 +41,7 @@ export default function App() {
 
   useEffect(() => {
     ambience.setScene(scene)
+    if (scene !== 'bar') barMusic.stop()
   }, [scene])
 
   const nav: Nav = useMemo(
@@ -52,6 +60,7 @@ export default function App() {
   const enterBar = useCallback(() => {
     window.history.pushState({ scene: 'bar', depth: 0 } satisfies HistState, '')
     setScene('bar')
+    if (ambience.enabled) barMusic.start()
   }, [])
 
   const leaveBar = useCallback(() => {
@@ -62,6 +71,7 @@ export default function App() {
     <NavCtx.Provider value={nav}>
       <div className="app" data-scene={scene}>
         {scene === 'street' ? <Street now={now} onEnter={enterBar} /> : <Bar now={now} onLeave={leaveBar} />}
+        {scene === 'bar' && musicOn && barSong?.youtubeId && isOpen(barSong.unlockAt, now) && <BarMusic song={barSong} />}
         <Overlays stack={stack} now={now} />
         {timeTravelAllowed() && stack.length === 0 && <TimeMachine now={now} />}
       </div>

@@ -40,11 +40,15 @@ test.describe('before the case opens (Sun 1 Nov)', () => {
   })
 })
 
-test('Monday: clue 1 solves and leads to Pink Pony Club', async ({ page }) => {
+test('Monday: Pink Pony Club comes on as she walks in, clue 1 opens the first album', async ({ page }) => {
   await page.goto(at('2026-11-02T07:00'))
   await enterBar(page)
+  const music = page.getByTestId('bar-music')
+  await expect(music).toContainText('Pink Pony Club')
+  await expect(music.locator('iframe')).toHaveAttribute('src', /GR3Liudev18.*autoplay=1/)
   await expect(spot(page, 'The jukebox')).toHaveAttribute('data-state', 'fresh')
-  await expect(spot(page, 'The photo wall')).toHaveAttribute('data-state', 'locked')
+  await expect(spot(page, 'The photo wall')).toHaveAttribute('data-state', 'fresh')
+  await expect(spot(page, 'The old TV')).toHaveAttribute('data-state', 'locked')
   await spot(page, 'Case file').click()
   await expect(page.getByTestId('exhibit-1')).toHaveAttribute('data-status', 'open')
   await expect(page.getByTestId('exhibit-2')).toHaveAttribute('data-status', 'locked')
@@ -54,10 +58,29 @@ test('Monday: clue 1 solves and leads to Pink Pony Club', async ({ page }) => {
   await page.getByTestId('option-1').click() // right
   await expect(page.getByTestId('evidence')).toBeVisible({ timeout: 4000 })
   await page.getByTestId('reward-cta').click()
-  await expect(page.getByTestId('jukebox')).toContainText('Pink Pony Club')
-  // Poster first, player after tap
-  await expect(page.locator('iframe')).toHaveCount(0)
+  await expect(page.getByTestId('album-view')).toBeVisible()
+  await page.getByRole('button', { name: 'Close album' }).click()
+  await expect(page.getByTestId('album-a1')).toBeVisible()
+  await expect(page.getByTestId('photos').locator('.pinned-photo.is-back')).toHaveCount(4)
+})
+
+test('the bar song stops for the jukebox and stays off once closed', async ({ page }) => {
+  await page.goto(at('2026-11-02T07:00'))
+  await enterBar(page)
+  await expect(page.getByTestId('bar-music')).toBeVisible()
+  await spot(page, 'The jukebox').click()
+  await expect(page.locator('[data-testid="jukebox"] iframe')).toHaveCount(0) // poster first
   await page.getByTestId('play').click()
+  await expect(page.getByTestId('bar-music')).toHaveCount(0)
+  await page.goBack()
+  await expect(page.getByTestId('bar-music')).toHaveCount(0)
+})
+
+test('no bar song before the bar opens', async ({ page }) => {
+  await page.goto(at('2026-11-01T20:00'))
+  await enterBar(page)
+  await page.waitForTimeout(500)
+  await expect(page.getByTestId('bar-music')).toHaveCount(0)
 })
 
 test('Wednesday: booth needs the clue, then reveals the plan', async ({ page }) => {

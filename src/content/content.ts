@@ -12,7 +12,7 @@
  * ─────────────────────────────────────────────────────────────────────────
  */
 import { secret } from '../lib/secret'
-import type { Day, Memory, Reveals, Someday, Song, Video } from './types'
+import type { Album, Day, Reveals, Someday, Song, Video } from './types'
 
 export const config = {
   /** What the otter calls her */
@@ -20,6 +20,8 @@ export const config = {
   caseTitle: 'The Missing Specimen',
   /** The case clock on the street counts down to this */
   countdownTo: '2026-11-06T06:00',
+  /** Plays on the jukebox when she walks into the bar (once that song is unlocked) */
+  barSong: 'pink-pony-club',
 }
 
 export const days: Day[] = [
@@ -45,7 +47,7 @@ export const days: Day[] = [
       image: secret('/assets/evidence-1.webp'),
       draft: true,
     },
-    reward: { kind: 'song', id: 'pink-pony-club', label: secret('Pink Pony Club is on the jukebox'), cta: secret('Play it') },
+    reward: { kind: 'album', id: 'a1', label: secret('Someone pinned a roll of film to the wall'), cta: secret('Have a look') },
   },
   {
     n: 2,
@@ -150,40 +152,50 @@ export const songs: Song[] = [
   { id: 'song-4', title: secret('Song four'), artist: secret('Artist to come'), youtubeId: '', unlockAt: '2026-11-05T06:00' },
 ]
 
-export const memories: Memory[] = [
-  { id: 'm1', caption: secret('Memory one: caption to come'), image: '', unlockAt: '2026-11-03T06:00' },
-  { id: 'm2', caption: secret('Memory two: caption to come'), image: '', unlockAt: '2026-11-04T06:00' },
-  { id: 'm3', caption: secret('Memory three: caption to come'), image: '', unlockAt: '2026-11-05T06:00' },
-  { id: 'm4', caption: secret('Memory four: caption to come'), image: '', unlockAt: '2026-11-06T06:00' },
+/**
+ * Photo wall: one mini album per day. Each opens at 6am on its day.
+ * Add photos with: python3 scripts/add-photos.py <folder-of-photos> a1
+ * (resizes, strips location data, writes /assets/albums/a1/01.webp …)
+ * then list them below as { image: '/assets/albums/a1/01.webp', caption: secret('…') }.
+ * Captions are optional.
+ */
+export const albums: Album[] = [
+  { id: 'a1', title: secret('Roll one'), unlockAt: '2026-11-02T06:00', photos: [], draft: true },
+  { id: 'a2', title: secret('Roll two'), unlockAt: '2026-11-03T06:00', photos: [], draft: true },
+  { id: 'a3', title: secret('Roll three'), unlockAt: '2026-11-04T06:00', photos: [], draft: true },
+  { id: 'a4', title: secret('Roll four'), unlockAt: '2026-11-05T06:00', photos: [], draft: true },
+  { id: 'a5', title: secret('Roll five'), unlockAt: '2026-11-06T06:00', photos: [], draft: true },
 ]
 
+/**
+ * The old TV. Either self-hosted (src: '/assets/videos/v1.mp4', made with
+ * scripts/add-video.sh) or YouTube (youtubeId). Self-hosted wins if both are set.
+ */
 export const videos: Video[] = [
-  { id: 'v1', from: secret('Friend one'), youtubeId: '', unlockAt: '2026-11-03T06:00' },
-  { id: 'v2', from: secret('Friend two'), youtubeId: '', unlockAt: '2026-11-04T06:00' },
-  { id: 'v3', from: secret('Friend three'), youtubeId: '', unlockAt: '2026-11-05T06:00' },
+  { id: 'v1', from: secret('Friend one'), src: '', unlockAt: '2026-11-03T06:00' },
+  { id: 'v2', from: secret('Friend two'), src: '', unlockAt: '2026-11-05T06:00' },
 ]
 
 export const reveals: Reveals = {
   wednesday: {
     day: 3,
     heading: secret('Wednesday, sorted'),
-    intro: secret('Two stops. Dress nice, eat well, then make something beautiful out of fire.'),
+    intro: secret('Two stops in Kingsland. Dress nice, eat well, then make something beautiful out of fire.'),
     stops: [
       {
         label: secret('Dinner'),
         name: secret('Nomiya'),
         note: secret('Japanese tapas & bar'),
-        time: secret('6:00 pm'),
+        time: secret('5:00 pm'),
         address: secret('484 New North Road, Kingsland'),
-        draft: true, // time still to confirm
       },
       {
         label: secret('Then'),
-        name: secret('Glass blowing for two'),
-        time: secret('8:00 pm'),
-        address: secret('Next door to Nomiya, Kingsland'),
-        note: secret('Studio name to come'),
-        draft: true,
+        name: secret('Monmouth Glass Studio'),
+        note: secret('Glass blowing for two. Whatever you make, you keep.'),
+        time: secret('6:00 pm'),
+        address: secret('3 Central Road, Kingsland'),
+        draft: true, // time is their usual Wednesday class (6–8:30pm); confirm with the booking
       },
     ],
   },
@@ -213,8 +225,8 @@ export const reveals: Reveals = {
     heading: secret('The back room'),
     intro: secret('You made it to the end of the case, Goose. Here’s what was behind the door.'),
     voucher: {
-      title: secret('ASB Classic'),
-      detail: secret('Tennis for two. Auckland, January. Details to come.'),
+      title: secret('ASB Classic Women’s'),
+      detail: secret('Two day-session tickets. Stanley Street, Auckland, 4–10 January 2027. We pick the day together.'),
       image: '',
       draft: true,
     },

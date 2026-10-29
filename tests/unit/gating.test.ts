@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { days, memories, reveals, songs, videos } from '../../src/content/content'
+import { days, albums, reveals, songs, videos } from '../../src/content/content'
 import { currentDay, dayForTime, dayStatus, isOpen, nextDay } from '../../src/lib/gating'
 import { nz } from '../../src/lib/time'
 import { decode, encode } from '../../src/lib/cipher'
@@ -20,7 +20,7 @@ describe('unlock schedule', () => {
   it('keeps everything locked before Monday 6am', () => {
     const now = nz('2026-11-02T05:59')
     expect(days.every((d) => dayStatus(d, now, none) === 'locked')).toBe(true)
-    for (const item of [...songs, ...memories, ...videos]) expect(isOpen(item.unlockAt, now)).toBe(false)
+    for (const item of [...songs, ...albums, ...videos]) expect(isOpen(item.unlockAt, now)).toBe(false)
     expect(currentDay(now)).toBeNull()
     expect(nextDay(now)?.n).toBe(1)
   })
@@ -54,7 +54,7 @@ describe('unlock schedule', () => {
       const r = d.reward
       if (r.kind === 'song') expect(songs.some((s) => s.id === r.id)).toBe(true)
       if (r.kind === 'video') expect(videos.some((s) => s.id === r.id)).toBe(true)
-      if (r.kind === 'memory') expect(memories.some((s) => s.id === r.id)).toBe(true)
+      if (r.kind === 'album') expect(albums.some((s) => s.id === r.id)).toBe(true)
       expect(d.clue.answer).toBeLessThan(d.clue.options.length)
     }
   })
