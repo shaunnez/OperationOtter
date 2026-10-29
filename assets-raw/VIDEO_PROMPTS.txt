@@ -1,0 +1,3 @@
+STREET IDLE LOOP: Use street_still.png as the exact start frame. Lock camera and framing. 5 seconds. Only fine rain, puddle movement, faint neon flicker, one natural blink and breathing from the tweed-coated detective otter. Preserve all objects and character identity. Seamless return to first frame. Silent.
+
+WALK-IN: Use street_still.png as exact start frame. Locked camera. Detective otter pushes away from brick wall, turns naturally to face door, walks toward it, pushes door open, warm amber light spills outward, otter crosses threshold, final frame dark for crossfade. Preserve the door, lighting and character identity. 5-7 seconds. Silent.

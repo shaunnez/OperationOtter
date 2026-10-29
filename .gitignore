@@ -1,0 +1,9 @@
+node_modules
+dist
+test-results
+playwright-report
+.DS_Store
+*.tsbuildinfo
+.otter-src.tgz
+# Raw generator clips are big; the encoded versions live in public/assets
+assets-raw/*.mp4
