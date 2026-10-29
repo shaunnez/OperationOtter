@@ -78,6 +78,15 @@ img {
   isolation: isolate;
 }
 
+/* A phone in "desktop site" mode lays the page out ~980px wide and shrinks it; scale the app back up to the real screen (see src/lib/fitScreen.ts) */
+.ui-scaled .app {
+  inset: 0 auto auto 0;
+  width: var(--ui-w);
+  height: var(--ui-h);
+  transform: scale(var(--ui-scale));
+  transform-origin: 0 0;
+}
+
 /* Desktop only (mouse + wide screen): show it in a phone frame. Phones and tablets always go full screen. */
 @media (min-width: 640px) and (hover: hover) and (pointer: fine) {
   body {

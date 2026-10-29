@@ -7,6 +7,9 @@ import '@fontsource/caveat/latin-700.css'
 import '@fontsource/tilt-neon/latin-400.css'
 import './styles/app.css'
 import App from './App'
+import { fitScreen } from './lib/fitScreen'
+
+fitScreen()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
