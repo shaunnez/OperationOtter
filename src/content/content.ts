@@ -172,8 +172,8 @@ export const albums: Album[] = [
  * scripts/add-video.sh) or YouTube (youtubeId). Self-hosted wins if both are set.
  */
 export const videos: Video[] = [
-  { id: 'v1', from: secret('Friend one'), src: '', unlockAt: '2026-11-03T06:00' },
-  { id: 'v2', from: secret('Friend two'), src: '', unlockAt: '2026-11-05T06:00' },
+  { id: 'v1', from: secret('Friend one'), src: '/assets/videos/v1.mp4', portrait: true, unlockAt: '2026-11-03T06:00' },
+  { id: 'v2', from: secret('Friend two'), src: '/assets/videos/v2.mp4', portrait: true, unlockAt: '2026-11-05T06:00' },
 ]
 
 export const reveals: Reveals = {

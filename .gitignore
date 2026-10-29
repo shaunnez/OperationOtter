@@ -7,3 +7,6 @@ playwright-report
 .otter-src.tgz
 # Raw generator clips are big; the encoded versions live in public/assets
 assets-raw/*.mp4
+
+# Friends' videos stay out of the public repo until cleared
+public/assets/videos/

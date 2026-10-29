@@ -18,6 +18,7 @@ export function VideoPoster({
   youtubeId,
   src,
   poster,
+  portrait,
   start,
   title,
   subtitle,
@@ -27,6 +28,7 @@ export function VideoPoster({
   /** Self-hosted MP4; used instead of YouTube when set */
   src?: string
   poster?: string
+  portrait?: boolean
   start?: number
   title: string
   subtitle: string
@@ -46,7 +48,7 @@ export function VideoPoster({
 
   if (playing && src) {
     return (
-      <div className={`player player--${look} is-playing`}>
+      <div className={`player player--${look} is-playing ${portrait ? 'player--tall' : ''}`}>
         <video src={`${asset(src)}#t=${start ?? 0.1}`} poster={asset(poster)} controls autoPlay playsInline preload="auto" data-testid="mp4" />
       </div>
     )
@@ -150,7 +152,7 @@ export function Tv({ videoId, now }: { videoId?: string; now: Date }) {
   return (
     <Sheet label="The old TV" testId="tv">
       <h2 className="neon-title neon-title--teal">Late night tapes</h2>
-      {selected && <VideoPoster look="crt" src={selected.src || undefined} poster={selected.poster} youtubeId={selected.youtubeId} title={`From ${selected.from}`} subtitle="A message for Goose" />}
+      {selected && <VideoPoster look="crt" src={selected.src || undefined} poster={selected.poster} portrait={selected.portrait} youtubeId={selected.youtubeId} title={`From ${selected.from}`} subtitle="A message for Goose" />}
       <ol className="tapes">
         {videos.map((v, i) => {
           const unlocked = isOpen(v.unlockAt, now)

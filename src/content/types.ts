@@ -77,6 +77,8 @@ export type Video = {
   src?: string
   /** Optional still shown before it plays (defaults to the first frame) */
   poster?: string
+  /** Filmed upright on a phone: the TV turns tall while it plays */
+  portrait?: boolean
   youtubeId?: string
   unlockAt: NzTime
 }

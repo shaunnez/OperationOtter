@@ -1977,6 +1977,11 @@ img {
   object-fit: contain;
   background: #000;
 }
+.player--tall {
+  width: min(100%, calc((100dvh - 330px) * 9 / 16));
+  margin-inline: auto;
+  aspect-ratio: 9 / 16;
+}
 .player__poster {
   position: absolute;
   inset: 0;
