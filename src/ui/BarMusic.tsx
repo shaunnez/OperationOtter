@@ -16,6 +16,9 @@ const YT_ORIGIN = 'https://www.youtube-nocookie.com'
 export function BarMusic({ song, visible }: { song: Song; visible: boolean }) {
   const frame = useRef<HTMLIFrameElement>(null)
   const startedVisible = useRef(visible)
+  // A tap that came before the hidden player finished loading waits here
+  const ready = useRef(false)
+  const wantsPlay = useRef(false)
   const [playing, setPlaying] = useState(false)
   const [waited, setWaited] = useState(false)
   const [error, setError] = useState<number | null>(null)
@@ -32,6 +35,11 @@ export function BarMusic({ song, visible }: { song: Song; visible: boolean }) {
       try {
         data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
       } catch {
+        return
+      }
+      if (data.event === 'onReady') {
+        ready.current = true
+        flush()
         return
       }
       if (data.event === 'onError') {
@@ -55,7 +63,20 @@ export function BarMusic({ song, visible }: { song: Song; visible: boolean }) {
     frame.current?.contentWindow?.postMessage(JSON.stringify({ event: 'command', func, args: [], id: 'bar-song', channel: 'widget' }), YT_ORIGIN)
   }
 
-  useEffect(() => barMusic.registerPlayer(() => command('playVideo')), [])
+  const flush = () => {
+    if (!wantsPlay.current) return
+    wantsPlay.current = false
+    command('playVideo')
+  }
+
+  useEffect(
+    () =>
+      barMusic.registerPlayer(() => {
+        if (ready.current) command('playVideo')
+        else wantsPlay.current = true
+      }),
+    [],
+  )
 
   // Left the bar (or closed it): stop the sound but keep the player loaded for next time
   useEffect(() => {
@@ -70,6 +91,8 @@ export function BarMusic({ song, visible }: { song: Song; visible: boolean }) {
   const listen = () => {
     const w = frame.current?.contentWindow
     if (!w) return
+    ready.current = true
+    flush()
     // Ask the player to post its state back to us
     w.postMessage(JSON.stringify({ event: 'listening', id: 'bar-song', channel: 'widget' }), YT_ORIGIN)
     w.postMessage(JSON.stringify({ event: 'command', func: 'addEventListener', args: ['onStateChange'], id: 'bar-song', channel: 'widget' }), YT_ORIGIN)
