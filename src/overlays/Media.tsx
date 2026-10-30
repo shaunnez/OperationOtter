@@ -58,7 +58,7 @@ export function VideoPoster({
     const params = new URLSearchParams({ autoplay: '1', playsinline: '1', rel: '0', modestbranding: '1' })
     if (start) params.set('start', String(start))
     return (
-      <div className={`player player--${look} is-playing`}>
+      <div className={`player player--${look} is-playing ${portrait ? 'player--tall' : ''}`}>
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${youtubeId}?${params}`}
           title={title}
