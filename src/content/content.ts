@@ -147,9 +147,9 @@ export const days: Day[] = [
 
 export const songs: Song[] = [
   { id: 'pink-pony-club', title: 'Pink Pony Club', artist: 'Chappell Roan', youtubeId: 'GR3Liudev18', unlockAt: '2026-11-02T06:00' },
-  { id: 'song-2', title: secret('Song two'), artist: secret('Artist to come'), youtubeId: '', unlockAt: '2026-11-03T06:00' },
-  { id: 'song-3', title: secret('Song three'), artist: secret('Artist to come'), youtubeId: '', unlockAt: '2026-11-04T06:00' },
-  { id: 'song-4', title: secret('Song four'), artist: secret('Artist to come'), youtubeId: '', unlockAt: '2026-11-05T06:00' },
+  { id: 'song-2', title: secret('Rockstar'), artist: secret('Nickelback'), youtubeId: 'DmeUuoxyt_E', unlockAt: '2026-11-03T06:00' },
+  { id: 'song-3', title: secret('10 Drunk Cigarettes'), artist: secret('Girly Girl Productions'), youtubeId: '42rHB72Bb1Q', unlockAt: '2026-11-04T06:00' },
+  { id: 'song-4', title: secret('Hallelujah'), artist: secret('Jeff Buckley'), youtubeId: 'y8AWFf7EAc4', unlockAt: '2026-11-05T06:00' },
 ]
 
 /**
