@@ -16,7 +16,7 @@ import type { Album, Day, Reveals, Someday, Song, Video } from './types'
 
 export const config = {
   /** What the otter calls her */
-  name: 'Goose',
+  name: 'Fish',
   caseTitle: 'The Missing Specimen',
   /** The case clock on the street counts down to this */
   countdownTo: '2026-11-06T06:00',
@@ -29,12 +29,11 @@ export const days: Day[] = [
     n: 1,
     unlockAt: '2026-11-02T06:00',
     title: secret('Where it all started'),
-    otterLine: secret("The city never sleeps, Goose. Neither do I. Pull up a stool, we've got a case."),
+    otterLine: secret("The city never sleeps, Fish. Neither do I. Pull up a stool, we've got a case."),
     clue: {
       question: secret('Every case starts somewhere. Where did this one start?'),
       options: [secret('A dark alley'), secret('Danny Doolans'), secret('The fish market'), secret('Night court')],
       answer: 1,
-      draft: true,
     },
     evidence: {
       title: secret('Something soft'),
@@ -42,10 +41,9 @@ export const days: Day[] = [
       notes: secret(
         'Grey. Soft. Elastic waist. Recovered in excellent condition. The suspect is advised to put them on immediately and achieve nothing for the rest of the evening.',
       ),
-      quote: secret('Comfort is not a crime, Goose.'),
-      quoteBy: 'The Otter',
+      quote: secret('Comfort is not a crime, fish-i-mous.'),
+      quoteBy: 'Goose',
       image: secret('/assets/evidence-1.webp'),
-      draft: true,
     },
     reward: { kind: 'album', id: 'a1', label: secret('Someone pinned a roll of film to the wall'), cta: secret('Have a look') },
   },
@@ -53,23 +51,21 @@ export const days: Day[] = [
     n: 2,
     unlockAt: '2026-11-03T06:00',
     title: secret('Something fizzy'),
-    otterLine: secret("Long day, Goose? I know a fix. It fizzes. And somebody left a tape behind the bar."),
+    otterLine: secret("Long day, Fish? I know a fix. It fizzes. And somebody left a tape behind the bar."),
     clue: {
       question: secret('Tonight’s evidence fizzes, smells suspiciously good, and dissolves without a trace. Where does it belong?'),
       options: [secret('In a cocktail'), secret('In the bath'), secret('In the goose’s water dish'), secret('In evidence lockup')],
       answer: 1,
-      draft: true,
     },
     evidence: {
       title: secret('The fizz'),
       tag: secret('Dissolves on contact'),
       notes: secret(
-        'Small, round, and smells like a crime against boredom. Forensics recommend hot water, a locked door and at least forty minutes. Do not operate heavy machinery.',
+        'Small, round, and smells like a crime against boredom. Forensics recommend hot water, a locked door and at least forty minutes.',
       ),
       quote: secret('Every good detective needs a long soak.'),
       quoteBy: 'The Otter',
       image: secret('/assets/evidence-2.webp'),
-      draft: true,
     },
     reward: { kind: 'video', id: 'v1', label: secret('Someone left a tape at the bar'), cta: secret('Watch it') },
   },
@@ -77,12 +73,11 @@ export const days: Day[] = [
     n: 3,
     unlockAt: '2026-11-04T06:00',
     title: secret('Hot work'),
-    otterLine: secret('Big day, Goose. Wear something nice. Bring an appetite and steady hands.'),
+    otterLine: secret('Big day, Fish. Wear something nice. Bring an appetite and steady hands.'),
     clue: {
       question: secret('Tonight you get your hands on something hot. What is it?'),
       options: [secret('A hot tip'), secret('Molten glass'), secret('A stolen pie'), secret('The goose')],
       answer: 1,
-      draft: true,
     },
     evidence: {
       title: secret('A matchbook'),
@@ -93,7 +88,6 @@ export const days: Day[] = [
       quote: secret('Some things are worth getting burned for.'),
       quoteBy: 'The Otter',
       image: secret('/assets/evidence-3.webp'),
-      draft: true,
     },
     reward: { kind: 'reveal', id: 'wednesday', label: secret('The back booth is open'), cta: secret('Open the booth') },
   },
@@ -101,45 +95,41 @@ export const days: Day[] = [
     n: 4,
     unlockAt: '2026-11-05T06:00',
     title: secret('Last call'),
-    otterLine: secret('Tonight the bar’s yours, Goose. I bought the ingredients. You bring the bad decisions.'),
+    otterLine: secret('Tonight the bar’s yours, Fish. I bought the ingredients. You bring the bad decisions.'),
     clue: {
       question: secret('Ingredients bought. Glasses chilled. Shaker polished. What’s happening tonight?'),
       options: [secret('Cocktail night'), secret('A stakeout'), secret('Karaoke'), secret('An early night')],
       answer: 0,
-      draft: true,
     },
     evidence: {
       title: secret('Two glasses'),
       tag: secret('Shaken, obviously'),
       notes: secret(
-        'Two glasses, one shaker, and a suspicious amount of citrus. The recipes are on the chalkboard. The bartender works for tips. Mostly kisses.',
+        'Small, tasty, dangerous, and smells like a crime against boredom. Forensics recommend having several, for loose inhibitions, questionable decisions and fun bedroom antics. The bartender works for tips. Mostly kisses.',
       ),
-      quote: secret('Bad decisions are free. Says so on the menu.'),
-      quoteBy: 'Danny Doolans',
+      quote: secret('Every detective needs a little liquid support every now and then. Enjoy your danger juice.'),
+      quoteBy: 'Goose',
       image: secret('/assets/evidence-4.webp'),
-      draft: true,
     },
-    reward: { kind: 'reveal', id: 'thursday', label: secret('The chalkboard has tonight’s menu'), cta: secret('Read the menu') },
+    reward: { kind: 'reveal', id: 'thursday', label: secret('Menu unlocked. Tonight’s specials are on the board.'), cta: secret('Open the menu') },
   },
   {
     n: 5,
     unlockAt: '2026-11-06T06:00',
     title: secret('The back room'),
-    otterLine: secret('Last day of the case, Goose. Some things get handed over in person. One thing I kept in the back room.'),
+    otterLine: secret('Last day of the case, Fish. Some things get handed over in person. One thing I kept in the back room.'),
     clue: {
       question: secret('Final question. Rackets, sunshine, and somebody yelling “out”. Where are we going?'),
-      options: [secret('The ASB Classic'), secret('Night court'), secret('The fish market'), secret('Wimbledon')],
-      answer: 0,
-      draft: true,
+      options: [secret('The cricket'), secret('A random person’s house'), secret('The fish market'), secret('The ASB Classic')],
+      answer: 3,
     },
     evidence: {
       title: secret('A ticket stub'),
       tag: secret('Admit two'),
       notes: secret('Recovered from the back room safe. Fuzzy, yellow, and headed somewhere sunny. The case is closed, but this one stays open.'),
-      quote: secret('Best case I ever worked, Goose.'),
-      quoteBy: 'The Otter',
+      quote: secret('Can’t wait to find another epic photo opportunity with you. You know what I’m talking about.'),
+      quoteBy: 'Goose',
       image: secret('/assets/evidence-5.webp'),
-      draft: true,
     },
     reward: { kind: 'reveal', id: 'friday', label: secret('The back room is unlocked'), cta: secret('Go in') },
   },
@@ -172,8 +162,8 @@ export const albums: Album[] = [
  * scripts/add-video.sh) or YouTube (youtubeId). Self-hosted wins if both are set.
  */
 export const videos: Video[] = [
-  { id: 'v1', from: secret('Friend one'), youtubeId: 'ixK3DCsV1q8', portrait: true, unlockAt: '2026-11-03T06:00' },
-  { id: 'v2', from: secret('Friend two'), youtubeId: 'x1kODrxdEWE', portrait: true, unlockAt: '2026-11-05T06:00' },
+  { id: 'v1', from: secret('Caleb'), youtubeId: 'ixK3DCsV1q8', portrait: true, unlockAt: '2026-11-03T06:00' },
+  { id: 'v2', from: secret('Ash'), youtubeId: 'x1kODrxdEWE', portrait: true, unlockAt: '2026-11-05T06:00' },
 ]
 
 export const reveals: Reveals = {
@@ -192,7 +182,7 @@ export const reveals: Reveals = {
       {
         label: secret('Then'),
         name: secret('Monmouth Glass Studio'),
-        note: secret('Glass blowing for two. Whatever you make, you keep.'),
+        note: secret('Glass blowing lesson. Whatever you make, you keep.'),
         time: secret('6:00 pm'),
         address: secret('3 Central Road, Kingsland'),
         draft: true, // time is their usual Wednesday class (6–8:30pm); confirm with the booking
@@ -223,7 +213,7 @@ export const reveals: Reveals = {
   friday: {
     day: 5,
     heading: secret('The back room'),
-    intro: secret('You made it to the end of the case, Goose. Here’s what was behind the door.'),
+    intro: secret('You made it to the end of the case, Fish. Here’s what was behind the door.'),
     voucher: {
       title: secret('ASB Classic Women’s'),
       detail: secret('Two day-session tickets. Stanley Street, Auckland, 4–10 January 2027. We pick the day together.'),
@@ -231,11 +221,11 @@ export const reveals: Reveals = {
       draft: true,
     },
     signOff: [
-      secret('Five days. Five clues. One very patient goose.'),
-      secret('I’ve worked a lot of cases in this town. Most of them end in the rain.'),
-      secret('This one ends with you.'),
-      secret('Case closed. Happy anniversary, Goose.'),
+      secret('Five days. Five clues. One very patient fish.'),
+      secret('I’ve worked cases alone, and you’ve proven you’re up to the task. Welcome to the big leagues, my fellow detective.'),
+      secret('Case closed. Happy anniversary. I love you.'),
     ],
+    signedBy: secret('Your Goose'),
   },
 }
 
@@ -257,7 +247,7 @@ export const eggs = {
   },
   goose: {
     title: 'Silly goose',
-    notes: 'Spotted on the bar, unsupervised, again. Witnesses describe her as “honking” and “an absolute delight”. No further questions.',
+    notes: 'Spotted on the bar, unsupervised, again. Witnesses describe him as “honking” and “an absolute delight”. No further questions.',
     quote: 'Every bar needs a regular. This one has a goose.',
     quoteBy: 'The Otter',
   },
@@ -265,18 +255,18 @@ export const eggs = {
 
 /** The otter's lines */
 export const lines = {
-  beforeOpening: 'Bar’s closed till Monday, Goose. Come back at six. I’ll leave the light on.',
-  afterCase: 'Case closed, Goose. Best one I ever worked. Stay as long as you like.',
-  lookAround: 'Have a look around, Goose. Swipe. Nothing in here bites. Except the goose.',
+  beforeOpening: 'Bar’s closed till Monday, Fish. Come back at six. I’ll leave the light on.',
+  afterCase: 'Case closed, Fish. Best one I ever worked. Stay as long as you like.',
+  lookAround: 'Have a look around, Fish. Swipe. Nothing in here bites. Except the goose.',
   locked: [
-    'Not yet, Goose. Good things come to those who wait. So do bad ones.',
+    'Not yet, Fish. Good things come to those who wait. So do bad ones.',
     'That one’s locked. I checked. Twice.',
     'Classified. Above your pay grade. Also mine.',
-    'Patience, Goose. Even I can’t rush the paperwork.',
+    'Patience, Fish. Even I can’t rush the paperwork.',
     'Some cases crack themselves. This one needs a calendar.',
   ],
-  clueFirst: 'Clue first, Goose. Then the good stuff.',
-  wrong: ['Cold, Goose. Ice cold.', 'Not quite. I’ve seen worse guesses. Not many.', 'Try again. The goose is judging you.'],
+  clueFirst: 'Clue first, Fish. Then the good stuff.',
+  wrong: ['Cold, Fish. Ice cold.', 'Not quite. I’ve seen worse guesses. Not many.', 'Try again. The goose is judging you.'],
   giveAway: 'I’ll let that one slide. The answer was staring right at you.',
-  solved: 'Nice work, Goose. Case notes coming through.',
+  solved: 'Nice work, Fish. Case notes coming through.',
 }

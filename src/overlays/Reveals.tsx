@@ -106,7 +106,7 @@ function Friday() {
           </p>
         ))}
         <p className="letter__sig" style={{ animationDelay: `${0.6 + r.signOff.length * 0.9}s` }}>
-          The Otter
+          {r.signedBy}
         </p>
       </div>
     </Sheet>

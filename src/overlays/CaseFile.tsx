@@ -23,7 +23,7 @@ export function CaseFileList({ now }: { now: Date }) {
         </div>
         <p className="casefile__kicker">Re:</p>
         <h2 className="casefile__title">{config.caseTitle}</h2>
-        <p className="casefile__sub">Five exhibits. One goose. No sleep till Friday.</p>
+        <p className="casefile__sub">Five exhibits. One fish. No sleep till Friday.</p>
         <ul className="exhibits">
           {days.map((d) => {
             const status = dayStatus(d, now, solved)

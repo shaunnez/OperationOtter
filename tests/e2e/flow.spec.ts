@@ -105,7 +105,9 @@ test('Thursday: menu shows the cocktails once solved', async ({ page }) => {
   await spot(page, 'Case file').click()
   await page.getByTestId('exhibit-4').click()
   await page.getByTestId('option-0').click()
-  await page.getByTestId('reward-cta').click({ timeout: 5000 })
+  await expect(page.getByTestId('reward-cta')).toBeInViewport({ timeout: 5000 })
+  await expect(page.getByTestId('evidence')).toContainText('Menu unlocked')
+  await page.getByTestId('reward-cta').click()
   await expect(page.getByTestId('reveal-thursday')).toBeVisible()
 })
 
@@ -115,9 +117,10 @@ test('Friday: the back room opens', async ({ page }) => {
   await expect(spot(page, 'Back room')).toHaveAttribute('data-state', 'fresh')
   await spot(page, 'Case file').click()
   await page.getByTestId('exhibit-5').click()
-  await page.getByTestId('option-0').click()
+  await page.getByTestId('option-3').click()
   await page.getByTestId('reward-cta').click({ timeout: 5000 })
   await expect(page.getByTestId('reveal-friday')).toBeVisible()
+  await expect(page.getByTestId('reveal-friday')).toContainText('Your Goose')
 })
 
 test('back button closes overlays, then leaves the bar', async ({ page }) => {

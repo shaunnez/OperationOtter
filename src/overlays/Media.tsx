@@ -152,7 +152,7 @@ export function Tv({ videoId, now }: { videoId?: string; now: Date }) {
   return (
     <Sheet label="The old TV" testId="tv">
       <h2 className="neon-title neon-title--teal">Late night tapes</h2>
-      {selected && <VideoPoster look="crt" src={selected.src || undefined} poster={selected.poster} portrait={selected.portrait} youtubeId={selected.youtubeId} title={`From ${selected.from}`} subtitle="A message for Goose" />}
+      {selected && <VideoPoster look="crt" src={selected.src || undefined} poster={selected.poster} portrait={selected.portrait} youtubeId={selected.youtubeId} title={`From ${selected.from}`} subtitle="A message for Fish" />}
       <ol className="tapes">
         {videos.map((v, i) => {
           const unlocked = isOpen(v.unlockAt, now)

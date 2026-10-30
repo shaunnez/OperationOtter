@@ -98,6 +98,8 @@ export type Reveals = {
     intro: string
     voucher: { title: string; detail: string; image?: string; draft?: boolean }
     signOff: string[]
+    /** Signature under the letter */
+    signedBy: string
   }
 }
 

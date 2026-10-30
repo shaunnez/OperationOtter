@@ -1,6 +1,6 @@
 # Operation Otter: notes for Claude
 
-A gift from Shaun to his partner, a mobile-first interactive story. A noir detective otter walks into Danny Doolans (the bar where they first kissed). From **Mon 2 to Fri 6 Nov 2026**, a new clue unlocks every morning at **06:00 Pacific/Auckland**. She calls herself "Goose"; "silly goose" and "it's okay fish" are real in-jokes. It is static: Vite + React 19 + TypeScript 7, with no backend and no analytics.
+A gift from Shaun to his partner, a mobile-first interactive story. A noir detective otter walks into Danny Doolans (the bar where they first kissed). From **Mon 2 to Fri 6 Nov 2026**, a new clue unlocks every morning at **06:00 Pacific/Auckland**. **She is "Fish" and Shaun is "Goose"**: the otter calls her Fish, and personal quotes and the final letter are signed by Goose. "Silly goose" and "it's okay fish" are real in-jokes. It is static: Vite + React 19 + TypeScript 7, with no backend and no analytics.
 
 **The repo is public.** Shaun chose that knowingly. Everything here (including commit messages) is readable, so keep commit messages free of spoilers (say "Update Wednesday reveal", not what it is).
 
