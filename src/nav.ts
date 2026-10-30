@@ -9,7 +9,7 @@ export type Overlay =
   | { kind: 'evidence'; day: number; fresh?: boolean }
   | { kind: 'egg'; id: 'fish' | 'goose' }
   | { kind: 'jukebox'; songId?: string }
-  | { kind: 'photos' }
+  | { kind: 'photos'; albumId?: string }
   | { kind: 'tv'; videoId?: string }
   | { kind: 'reveal'; id: RevealId }
 

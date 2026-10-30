@@ -1,13 +1,14 @@
 import { asset } from '../lib/asset'
-import { useEffect, useState } from 'react'
-import { memories, someday, songs, videos } from '../content/content'
-import type { Memory, NzTime } from '../content/types'
+import { useEffect, useRef, useState } from 'react'
+import { albums, someday, songs, videos } from '../content/content'
+import type { Album, NzTime, Photo } from '../content/types'
+import { barMusic } from '../lib/barMusic'
 import { ambience } from '../lib/ambience'
 import { at, isOpen } from '../lib/gating'
 import { markSeen } from '../lib/progress'
 import { formatDay, timeTravelAllowed } from '../lib/time'
 import { useNav } from '../nav'
-import { Padlock } from '../ui/bits'
+import { Draft, Padlock } from '../ui/bits'
 import { Sheet } from './Sheet'
 
 const dayShort = (t: NzTime) => formatDay(at(t))
@@ -15,12 +16,19 @@ const dayShort = (t: NzTime) => formatDay(at(t))
 /** Styled poster until tapped, then the real YouTube player. */
 export function VideoPoster({
   youtubeId,
+  src,
+  poster,
+  portrait,
   start,
   title,
   subtitle,
   look,
 }: {
   youtubeId?: string
+  /** Self-hosted MP4; used instead of YouTube when set */
+  src?: string
+  poster?: string
+  portrait?: boolean
   start?: number
   title: string
   subtitle: string
@@ -30,12 +38,21 @@ export function VideoPoster({
 
   useEffect(() => {
     setPlaying(false)
-  }, [youtubeId, title])
+  }, [youtubeId, src, title])
 
   useEffect(() => {
     ambience.duck(playing)
+    if (playing) barMusic.stop()
     return () => ambience.duck(false)
   }, [playing])
+
+  if (playing && src) {
+    return (
+      <div className={`player player--${look} is-playing ${portrait ? 'player--tall' : ''}`}>
+        <video src={`${asset(src)}#t=${start ?? 0.1}`} poster={asset(poster)} controls autoPlay playsInline preload="auto" data-testid="mp4" />
+      </div>
+    )
+  }
 
   if (playing && youtubeId) {
     const params = new URLSearchParams({ autoplay: '1', playsinline: '1', rel: '0', modestbranding: '1' })
@@ -75,9 +92,9 @@ export function VideoPoster({
           </svg>
         </span>
       </button>
-      {playing && !youtubeId && (
+      {playing && !youtubeId && !src && (
         <p className="player__missing" role="status">
-          {timeTravelAllowed() ? 'No YouTube ID yet: add it in content.ts' : 'This tape hasn’t arrived yet. Check back soon.'}
+          {timeTravelAllowed() ? 'No video yet: add src or youtubeId in content.ts' : 'This tape hasn’t arrived yet. Check back soon.'}
         </p>
       )}
     </div>
@@ -135,7 +152,7 @@ export function Tv({ videoId, now }: { videoId?: string; now: Date }) {
   return (
     <Sheet label="The old TV" testId="tv">
       <h2 className="neon-title neon-title--teal">Late night tapes</h2>
-      {selected && <VideoPoster look="crt" youtubeId={selected.youtubeId} title={`From ${selected.from}`} subtitle="A message for Goose" />}
+      {selected && <VideoPoster look="crt" src={selected.src || undefined} poster={selected.poster} portrait={selected.portrait} youtubeId={selected.youtubeId} title={`From ${selected.from}`} subtitle="A message for Goose" />}
       <ol className="tapes">
         {videos.map((v, i) => {
           const unlocked = isOpen(v.unlockAt, now)
@@ -163,31 +180,40 @@ export function Tv({ videoId, now }: { videoId?: string; now: Date }) {
   )
 }
 
-export function PhotoWall({ now }: { now: Date }) {
+export function PhotoWall({ now, albumId }: { now: Date; albumId?: string }) {
   const nav = useNav()
-  const [zoom, setZoom] = useState<Memory | null>(null)
-  const openCount = memories.filter((m) => isOpen(m.unlockAt, now)).length
-  useEffect(() => memories.filter((m) => isOpen(m.unlockAt, now)).forEach((m) => markSeen(`memory:${m.id}`)), [openCount]) // eslint-disable-line react-hooks/exhaustive-deps
+  const [viewing, setViewing] = useState<Album | null>(() => {
+    const a = albums.find((x) => x.id === albumId)
+    return a && isOpen(a.unlockAt, now) ? a : null
+  })
+  const openCount = albums.filter((a) => isOpen(a.unlockAt, now)).length
+  useEffect(() => albums.filter((a) => isOpen(a.unlockAt, now)).forEach((a) => markSeen(`album:${a.id}`)), [openCount]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Sheet label="Photo wall" variant="cork" testId="photos">
       <h2 className="cork-title">The wall</h2>
       <div className="pins">
-        {memories.map((m, i) => {
-          const unlocked = isOpen(m.unlockAt, now)
+        {albums.map((a, i) => {
+          const unlocked = isOpen(a.unlockAt, now)
           const tilt = [-4, 3, -2, 5, -3, 2][i % 6]
           return unlocked ? (
-            <button key={m.id} className="pinned-photo" style={{ rotate: `${tilt}deg` }} onClick={() => setZoom(m)} data-testid={`memory-${m.id}`}>
+            <button key={a.id} className="pinned-photo album" style={{ rotate: `${tilt}deg` }} onClick={() => setViewing(a)} data-testid={`album-${a.id}`}>
               <span className="pin" aria-hidden />
-              <MemoryImage m={m} />
-              <span className="pinned-photo__cap">{m.caption}</span>
+              <span className="album__stack" aria-hidden>
+                <PhotoImage photo={a.photos[1]} className="album__under" />
+                <PhotoImage photo={a.photos[0]} />
+              </span>
+              <span className="pinned-photo__cap">
+                {a.title} <Draft when={a.draft} />
+              </span>
+              <span className="album__count">{a.photos.length ? `${a.photos.length} photo${a.photos.length === 1 ? '' : 's'}` : 'Developing'}</span>
             </button>
           ) : (
-            <button key={m.id} className="pinned-photo is-back" style={{ rotate: `${tilt}deg` }} onClick={() => nav.open({ kind: 'locked', title: 'A photo on the wall', unlockAt: m.unlockAt })}>
+            <button key={a.id} className="pinned-photo is-back" style={{ rotate: `${tilt}deg` }} onClick={() => nav.open({ kind: 'locked', title: 'A roll of film', unlockAt: a.unlockAt })}>
               <span className="pin" aria-hidden />
               <span className="pinned-photo__back">
                 <span>Do not open until</span>
-                <strong>{dayShort(m.unlockAt)}</strong>
+                <strong>{dayShort(a.unlockAt)}</strong>
               </span>
             </button>
           )
@@ -206,25 +232,87 @@ export function PhotoWall({ now }: { now: Date }) {
         ))}
       </div>
 
-      {zoom && (
-        <button className="lightbox" onClick={() => setZoom(null)} aria-label="Close photo">
-          <span className="lightbox__photo">
-            <MemoryImage m={zoom} />
-            <span className="pinned-photo__cap">{zoom.caption}</span>
-            {zoom.when && <span className="lightbox__when">{zoom.when}</span>}
-          </span>
-        </button>
-      )}
+      {viewing && <AlbumViewer album={viewing} onClose={() => setViewing(null)} />}
     </Sheet>
   )
 }
 
-function MemoryImage({ m }: { m: Memory }) {
-  const [ok, setOk] = useState(!!m.image)
-  return ok && m.image ? (
-    <img className="pinned-photo__img" src={asset(m.image)} alt="" onError={() => setOk(false)} loading="lazy" />
+/** Full-screen swipe-through of one album (native scroll-snap). */
+function AlbumViewer({ album, onClose }: { album: Album; onClose: () => void }) {
+  const strip = useRef<HTMLDivElement>(null)
+  const [index, setIndex] = useState(0)
+  const total = album.photos.length
+
+  const go = (d: number) => {
+    const el = strip.current
+    if (!el) return
+    el.scrollTo({ left: (index + d) * el.clientWidth, behavior: 'smooth' })
+  }
+
+  return (
+    <div className="album-view" role="dialog" aria-label={album.title} data-testid="album-view">
+      <div className="album-view__top">
+        <span className="album-view__title">{album.title}</span>
+        {total > 0 && (
+          <span className="album-view__count" data-testid="album-count">
+            {index + 1} / {total}
+          </span>
+        )}
+        <button className="album-view__close" onClick={onClose} aria-label="Close album">
+          ✕
+        </button>
+      </div>
+      {total === 0 ? (
+        <p className="album-view__empty">Still developing. Check back soon.</p>
+      ) : (
+        <div
+          ref={strip}
+          className="album-view__strip"
+          onScroll={(e) => {
+            const el = e.currentTarget
+            setIndex(Math.min(total - 1, Math.max(0, Math.round(el.scrollLeft / el.clientWidth))))
+          }}
+        >
+          {album.photos.map((p, i) => (
+            <figure key={i} className="album-view__slide">
+              <span className="album-view__photo" style={{ rotate: `${[-1.5, 1, -0.5, 1.5][i % 4]}deg` }}>
+                <PhotoImage photo={p} eager={Math.abs(i - index) <= 1} />
+                {(p.caption || p.when) && (
+                  <figcaption className="album-view__cap">
+                    {p.caption}
+                    {p.when && <span className="album-view__when">{p.when}</span>}
+                  </figcaption>
+                )}
+              </span>
+            </figure>
+          ))}
+        </div>
+      )}
+      {total > 1 && (
+        <div className="album-view__nav">
+          <button onClick={() => go(-1)} disabled={index === 0} aria-label="Previous photo">
+            ‹
+          </button>
+          <span className="album-view__dots" aria-hidden>
+            {album.photos.map((_, i) => (
+              <i key={i} className={i === index ? 'is-on' : ''} />
+            ))}
+          </span>
+          <button onClick={() => go(1)} disabled={index >= total - 1} aria-label="Next photo">
+            ›
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function PhotoImage({ photo, className, eager }: { photo?: Photo; className?: string; eager?: boolean }) {
+  const [ok, setOk] = useState(!!photo?.image)
+  return ok && photo?.image ? (
+    <img className={`pinned-photo__img ${className ?? ''}`} src={asset(photo.image)} alt="" onError={() => setOk(false)} loading={eager ? 'eager' : 'lazy'} decoding="async" />
   ) : (
-    <span className="pinned-photo__img pinned-photo__img--empty" aria-hidden>
+    <span className={`pinned-photo__img pinned-photo__img--empty ${className ?? ''}`} aria-hidden>
       photo
     </span>
   )

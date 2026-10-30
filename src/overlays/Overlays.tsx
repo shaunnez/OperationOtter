@@ -29,7 +29,7 @@ function render(o: Overlay, now: Date) {
     case 'jukebox':
       return <Jukebox songId={o.songId} now={now} />
     case 'photos':
-      return <PhotoWall now={now} />
+      return <PhotoWall now={now} albumId={o.albumId} />
     case 'tv':
       return <Tv videoId={o.videoId} now={now} />
     case 'reveal':

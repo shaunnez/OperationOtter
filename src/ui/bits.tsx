@@ -1,4 +1,5 @@
 import { asset } from '../lib/asset'
+import { barMusic } from '../lib/barMusic'
 import { useEffect, useState, type ReactNode } from 'react'
 import { ambience, useAmbienceEnabled } from '../lib/ambience'
 import { pad2, remaining, timeTravelAllowed } from '../lib/time'
@@ -42,7 +43,12 @@ export function Countdown({ to, now, size = 'md', testId }: { to: Date; now: Dat
 export function SoundToggle() {
   const on = useAmbienceEnabled()
   return (
-    <button className={`round-btn sound ${on ? 'is-on' : ''}`} onClick={() => ambience.toggle()} aria-label={on ? 'Mute sound' : 'Turn sound on'} aria-pressed={on}>
+    <button className={`round-btn sound ${on ? 'is-on' : ''}`} onClick={() => {
+        const wasOn = ambience.enabled
+        ambience.toggle()
+        if (wasOn) barMusic.stop()
+        else if (ambience.scene === 'bar') barMusic.start()
+      }} aria-label={on ? 'Mute sound' : 'Turn sound on'} aria-pressed={on}>
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
         <path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" />
         {on ? (

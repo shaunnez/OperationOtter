@@ -12,7 +12,7 @@ let rainGain: GainNode | null = null
 let roomGain: GainNode | null = null
 
 let enabled = false
-let ducked = false
+const duckers = new Set<string>()
 let scene: Scene = 'street'
 const listeners = new Set<() => void>()
 
@@ -77,7 +77,7 @@ function build() {
 function apply() {
   if (!ctx || !master || !rainFilter || !rainGain || !roomGain) return
   const t = ctx.currentTime
-  const target = enabled && !ducked ? 1 : 0
+  const target = enabled && duckers.size === 0 ? 1 : 0
   master.gain.cancelScheduledValues(t)
   master.gain.setTargetAtTime(target, t, 0.6)
   const inBar = scene === 'bar'
@@ -112,10 +112,14 @@ export const ambience = {
     scene = s
     apply()
   },
-  /** Fade out while a video is playing. */
-  duck(on: boolean) {
-    ducked = on
+  /** Fade out while a video or song is playing. Each caller passes its own key. */
+  duck(on: boolean, key = 'video') {
+    if (on) duckers.add(key)
+    else duckers.delete(key)
     apply()
+  },
+  get scene() {
+    return scene
   },
   get enabled() {
     return enabled

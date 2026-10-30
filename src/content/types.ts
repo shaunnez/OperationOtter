@@ -26,7 +26,7 @@ export type Evidence = {
 
 export type RewardRef =
   | { kind: 'song'; id: string }
-  | { kind: 'memory'; id: string }
+  | { kind: 'album'; id: string }
   | { kind: 'video'; id: string }
   | { kind: 'reveal'; id: RevealId }
 
@@ -54,18 +54,31 @@ export type Song = {
   unlockAt: NzTime
 }
 
-export type Memory = {
-  id: string
-  image?: string
-  caption: string
+export type Photo = {
+  /** /assets/albums/<album>/01.webp */
+  image: string
+  caption?: string
   /** When it happened, in your words */
   when?: string
+}
+
+export type Album = {
+  id: string
+  title: string
   unlockAt: NzTime
+  photos: Photo[]
+  draft?: boolean
 }
 
 export type Video = {
   id: string
   from: string
+  /** Self-hosted MP4 in /public, e.g. /assets/videos/v1.mp4 */
+  src?: string
+  /** Optional still shown before it plays (defaults to the first frame) */
+  poster?: string
+  /** Filmed upright on a phone: the TV turns tall while it plays */
+  portrait?: boolean
   youtubeId?: string
   unlockAt: NzTime
 }
