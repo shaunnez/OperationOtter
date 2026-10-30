@@ -61,6 +61,18 @@ function Thursday() {
       <div className="chalk-sheet">
         <h2 className="chalk-sheet__head">{r.heading}</h2>
         <p className="chalk-sheet__intro">{r.intro}</p>
+        {r.voucher && (
+          <div className="ticket ticket--wing" data-testid="wing-voucher">
+            <div className="ticket__main">
+              <span className="ticket__admit">Voucher · admit two</span>
+              <span className="ticket__title">{r.voucher.title}</span>
+              <span className="ticket__detail">{r.voucher.detail}</span>
+            </div>
+            <div className="ticket__stub ticket__stub--teal" aria-hidden>
+              <WingFoil />
+            </div>
+          </div>
+        )}
         {r.cocktails.map((c, i) => (
           <section key={i} className="recipe">
             <h3 className="recipe__name">
@@ -77,6 +89,22 @@ function Thursday() {
         ))}
       </div>
     </Sheet>
+  )
+}
+
+/** A little line drawing of a wing foil: the wing above, board, mast and foil below. */
+function WingFoil() {
+  return (
+    <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 27C16 9 48 9 56 27C46 21 18 21 8 27Z" fill="currentColor" fillOpacity="0.18" />
+      <path d="M32 12.5V22" />
+      <path d="M25 22.5c2 2.2 12 2.2 14 0" />
+      <path d="M17 40h30a3 3 0 0 1-3 4H20a3 3 0 0 1-3-4Z" fill="currentColor" fillOpacity="0.18" />
+      <path d="M32 44v10" />
+      <path d="M21 55.5c4-2 18-2 22 0" />
+      <path d="M41 50.5h6" />
+      <path d="M6 59c5-2 9 2 14 0s9 2 14 0 9 2 14 0 9 2 10 0" strokeWidth="1.6" opacity="0.6" />
+    </svg>
   )
 }
 

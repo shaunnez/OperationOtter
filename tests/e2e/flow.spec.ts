@@ -109,6 +109,7 @@ test('Thursday: menu shows the cocktails once solved', async ({ page }) => {
   await expect(page.getByTestId('evidence')).toContainText('Menu unlocked')
   await page.getByTestId('reward-cta').click()
   await expect(page.getByTestId('reveal-thursday')).toBeVisible()
+  await expect(page.getByTestId('wing-voucher')).toContainText('Wing foiling for two')
 })
 
 test('Friday: the back room opens', async ({ page }) => {

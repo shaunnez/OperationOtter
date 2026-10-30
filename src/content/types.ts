@@ -91,7 +91,7 @@ export type Cocktail = { name: string; glass: string; ingredients: string[]; met
 
 export type Reveals = {
   wednesday: { day: number; heading: string; intro: string; stops: Stop[] }
-  thursday: { day: number; heading: string; intro: string; cocktails: Cocktail[] }
+  thursday: { day: number; heading: string; intro: string; voucher?: { title: string; detail: string }; cocktails: Cocktail[] }
   friday: {
     day: number
     heading: string
@@ -103,4 +103,3 @@ export type Reveals = {
   }
 }
 
-export type Someday = { title: string; note?: string }

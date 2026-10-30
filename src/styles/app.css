@@ -2901,3 +2901,20 @@ img {
 .reward .btn-neon {
   padding-block: 9px;
 }
+
+/* Thursday's wing foil voucher, pinned to the chalkboard */
+.ticket--wing {
+  margin: 4px 0 22px;
+  font-family: var(--f-type);
+}
+.ticket--wing .ticket__title {
+  font-size: 26px;
+}
+.ticket__stub--teal {
+  width: 76px;
+  color: #06302c;
+  background:
+    radial-gradient(circle at 0 0, transparent 10px, #5ef0e0 10.5px) top left / 51% 51% no-repeat,
+    radial-gradient(circle at 0 100%, transparent 10px, #5ef0e0 10.5px) bottom left / 51% 51% no-repeat,
+    linear-gradient(#5ef0e0, #5ef0e0) right / 50% 100% no-repeat;
+}

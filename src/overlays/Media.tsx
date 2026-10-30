@@ -1,6 +1,6 @@
 import { asset } from '../lib/asset'
 import { useEffect, useRef, useState } from 'react'
-import { albums, someday, songs, videos } from '../content/content'
+import { albums, songs, videos } from '../content/content'
 import type { Album, NzTime, Photo } from '../content/types'
 import { barMusic } from '../lib/barMusic'
 import { ambience } from '../lib/ambience'
@@ -220,17 +220,6 @@ export function PhotoWall({ now, albumId }: { now: Date; albumId?: string }) {
         })}
       </div>
 
-      <h3 className="cork-title cork-title--small">40 before 40</h3>
-      <p className="cork-sub">Parked for later. No dates. Yet.</p>
-      <div className="index-cards">
-        {someday.map((s, i) => (
-          <div key={s.title} className="index-card" style={{ rotate: `${[2, -3, 1, -2][i % 4]}deg` }}>
-            <span className="pin pin--teal" aria-hidden />
-            <span className="index-card__title">{s.title}</span>
-            <span className="index-card__note">{s.note ?? 'Coming soon'}</span>
-          </div>
-        ))}
-      </div>
 
       {viewing && <AlbumViewer album={viewing} onClose={() => setViewing(null)} />}
     </Sheet>

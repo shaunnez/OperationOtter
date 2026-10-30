@@ -3,7 +3,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 // The built bundle must not contain future content in plain text.
-const SPOILERS = ['Molten glass', 'Glass blowing', 'ASB Classic', 'Wednesday, sorted', 'Happy anniversary', 'Something soft', 'The Silly Goose']
+const SPOILERS = ['Molten glass', 'Glass blowing', 'ASB Classic', 'Wednesday, sorted', 'Happy anniversary', 'Something soft', 'The Silly Goose', 'Wing foiling', 'MadLoop']
 
 test('no spoilers in the built JavaScript or HTML', () => {
   const dir = join(process.cwd(), 'dist')

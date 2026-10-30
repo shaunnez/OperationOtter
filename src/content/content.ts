@@ -12,7 +12,7 @@
  * ─────────────────────────────────────────────────────────────────────────
  */
 import { secret } from '../lib/secret'
-import type { Album, Day, Reveals, Someday, Song, Video } from './types'
+import type { Album, Day, Reveals, Song, Video } from './types'
 
 export const config = {
   /** What the otter calls her */
@@ -111,7 +111,7 @@ export const days: Day[] = [
       quoteBy: 'Goose',
       image: secret('/assets/evidence-4.webp'),
     },
-    reward: { kind: 'reveal', id: 'thursday', label: secret('Menu unlocked. Tonight’s specials are on the board.'), cta: secret('Open the menu') },
+    reward: { kind: 'reveal', id: 'thursday', label: secret('Menu unlocked. And there’s a voucher behind the bar.'), cta: secret('Open the menu') },
   },
   {
     n: 5,
@@ -138,8 +138,9 @@ export const days: Day[] = [
 export const songs: Song[] = [
   { id: 'pink-pony-club', title: 'Pink Pony Club', artist: 'Chappell Roan', youtubeId: 'GR3Liudev18', unlockAt: '2026-11-02T06:00' },
   { id: 'song-2', title: secret('Rockstar'), artist: secret('Nickelback'), youtubeId: 'DmeUuoxyt_E', unlockAt: '2026-11-03T06:00' },
-  { id: 'song-3', title: secret('10 Drunk Cigarettes'), artist: secret('Girly Girl Productions'), youtubeId: '42rHB72Bb1Q', unlockAt: '2026-11-04T06:00' },
-  { id: 'song-4', title: secret('Hallelujah'), artist: secret('Jeff Buckley'), youtubeId: 'y8AWFf7EAc4', unlockAt: '2026-11-05T06:00' },
+  { id: 'song-3', title: secret('Hallelujah'), artist: secret('Jeff Buckley'), youtubeId: 'y8AWFf7EAc4', unlockAt: '2026-11-04T06:00' },
+  { id: 'song-4', title: secret('10 Drunk Cigarettes'), artist: secret('Girly Girl Productions'), youtubeId: '42rHB72Bb1Q', unlockAt: '2026-11-05T06:00' },
+  { id: 'song-5', title: secret('Can’t Help Falling in Love'), artist: secret('Diana Ankudinova'), youtubeId: 'SY3OZVmfGVw', unlockAt: '2026-11-06T06:00' },
 ]
 
 /**
@@ -192,6 +193,10 @@ export const reveals: Reveals = {
     day: 4,
     heading: secret('Tonight’s specials'),
     intro: secret('Ingredients are in the kitchen. Pick one. Or both. It’s Thursday.'),
+    voucher: {
+      title: secret('Wing foiling for two'),
+      detail: secret('Lessons at MadLoop, Lake Pupuke (Sylvan Park, Milford). Both of us on the water. Date to be confirmed.'),
+    },
     cocktails: [
       {
         name: secret('The Silly Goose'),
@@ -224,14 +229,6 @@ export const reveals: Reveals = {
     signedBy: secret('Your Goose'),
   },
 }
-
-/** "40 before 40" corkboard: parked ideas, no dates */
-export const someday: Someday[] = [
-  { title: 'Zip line' },
-  { title: 'Jet ski' },
-  { title: 'Private chef' },
-  { title: 'New Caledonia or Rarotonga' },
-]
 
 /** Easter eggs on the bar: always available */
 export const eggs = {
