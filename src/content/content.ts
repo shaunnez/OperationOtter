@@ -151,11 +151,61 @@ export const songs: Song[] = [
  * Captions are optional.
  */
 export const albums: Album[] = [
-  { id: 'a1', title: secret('Roll one'), unlockAt: '2026-11-02T06:00', photos: [], draft: true },
-  { id: 'a2', title: secret('Roll two'), unlockAt: '2026-11-03T06:00', photos: [], draft: true },
-  { id: 'a3', title: secret('Roll three'), unlockAt: '2026-11-04T06:00', photos: [], draft: true },
-  { id: 'a4', title: secret('Roll four'), unlockAt: '2026-11-05T06:00', photos: [], draft: true },
-  { id: 'a5', title: secret('Roll five'), unlockAt: '2026-11-06T06:00', photos: [], draft: true },
+  {
+    id: 'a1',
+    title: secret('The Fluffy Files'),
+    unlockAt: '2026-11-02T06:00',
+    photos: [
+      { image: '/assets/albums/a1/01.webp', caption: secret('Suspect approaches a see-through bubble. Zero privacy, maximum cosy. I’d have taken the case for free.') },
+      { image: '/assets/albums/a1/02.webp', caption: secret('Fish is being tailed. White, fluffy, four legs, one very long neck. I’ve seen subtler surveillance.') },
+      { image: '/assets/albums/a1/03.webp', caption: secret('Two faces, two sheet masks, zero dignity. Fish is giving the suspicious eyebrow. The goose behind her is just happy to be here.') },
+    ],
+    draft: true,
+  },
+  {
+    id: 'a2',
+    title: secret('Rockstar Behaviour'),
+    unlockAt: '2026-11-03T06:00',
+    photos: [
+      { image: '/assets/albums/a2/01.webp', caption: secret('Fish, mid-game, holding her cards like they owe her money. The deck says “Psycho Killer”. The look says she’s already won.') },
+      { image: '/assets/albums/a2/02.webp', caption: secret('Pastel curls, red lip, a stare that could crack a safe. Fish, in a pasta shop, being the most interesting thing in it.') },
+      { image: '/assets/albums/a2/03.webp', caption: secret('Witness caught in motion: one white dog, all four paws off the ground. Nobody stops this one.') },
+    ],
+    draft: true,
+  },
+  {
+    id: 'a3',
+    title: secret('Dressed to the Nines'),
+    unlockAt: '2026-11-04T06:00',
+    photos: [
+      { image: '/assets/albums/a3/01.webp', caption: secret('A cocktail flight, a plate that looks like art, chopsticks at the ready. Fish knows exactly what she’s doing.') },
+      { image: '/assets/albums/a3/02.webp', caption: secret('Goose, hands behind his back, posing like he’s about to confess. The photo booth’s verdict: guilty of looking good.') },
+      { image: '/assets/albums/a3/03.webp', caption: secret('And then Fish walked in wearing gold. The saree, the glasses, the smirk. The jury needs no further evidence.') },
+    ],
+    draft: true,
+  },
+  {
+    id: 'a4',
+    title: secret('Wet Work'),
+    unlockAt: '2026-11-05T06:00',
+    photos: [
+      { image: '/assets/albums/a4/01.webp', caption: secret('Fizz in the hot tub, redrawn as a storybook. Fish front and centre, Goose lounging like he owns the place.') },
+      { image: '/assets/albums/a4/02.webp', caption: secret('Fish on a jet ski, flashing a peace sign at the whole bay. Fastest suspect on the water.') },
+      { image: '/assets/albums/a4/03.webp', caption: secret('Two life jackets, a quiet river and the best selfie angle money can’t buy.') },
+    ],
+    draft: true,
+  },
+  {
+    id: 'a5',
+    title: secret('Closing Statement'),
+    unlockAt: '2026-11-06T06:00',
+    photos: [
+      { image: '/assets/albums/a5/01.webp', caption: secret('The photo booth strip. Noses touching, and then… well. The otter looked away. Mostly.') },
+      { image: '/assets/albums/a5/02.webp', caption: secret('Cheek to cheek, sun on the grass, a wheelie bin in the background. Not glamorous. Perfect.') },
+      { image: '/assets/albums/a5/03.webp', caption: secret('Sunset, a fence, a floral dress and a floral shirt, redrawn like a storybook. The evidence says: happy ending.') },
+    ],
+    draft: true,
+  },
 ]
 
 /**
