@@ -29,7 +29,9 @@ The site lives under a sub-path, so **never hard-code `/assets/...` into the DOM
 - `src/content/content.ts`: **all words and media**: days (clue, evidence, reward), songs, memories, videos, the Wed/Thu/Fri reveals, eggs, the otter's lines, "40 before 40" cards. Most edits happen here.
   - `secret("…")` wraps anything that would spoil a future day. A build plugin (`vite-plugin-secret.ts`) scrambles those strings, so its argument must be a plain string literal.
   - `draft: true` marks stand-in text Claude wrote. Dev and preview builds show a yellow DRAFT tag on it. Remove the flag when Shaun confirms the real thing.
-  - YouTube: just the ID in `youtubeId`. Friends' videos should be unlisted.
+  - Songs: YouTube ID in `youtubeId`. `config.barSong` (Pink Pony Club) autoplays in a small "now playing" card when she walks into the bar (`src/ui/BarMusic.tsx`, state in `src/lib/barMusic.ts`). Android allows it after the door tap; iPhones show YouTube's play button in the card. It stops when she mutes, taps ✕, leaves, or plays another song or tape.
+  - Photo wall = one mini album per day (`albums`). Import a folder with `python3 scripts/add-photos.py <folder> a1`, which resizes, **strips EXIF/GPS** and prints the `photos: [...]` lines. HEIC needs `pip install pillow-heif --break-system-packages`.
+  - Friends' tapes (`videos`) are unlisted YouTube Shorts (`youtubeId`, `portrait: true` makes the TV tall). Self-hosted MP4 via `src` also works (`scripts/add-video.sh`), but `public/assets/videos/` is gitignored because the repo is public.
   - Images go in `public/assets/` as compressed `.webp` (max ~1600px long side). Originals go in `assets-raw/`.
 - `src/content/scenes.ts`: positions on the artwork (hotspots, sign and chalkboard corners, glows) as % of the image. If an image changes, re-map these and screenshot to check.
 - `src/content/walk-track.json`: camera track (optical flow) for the walk clip so the neon sign follows its push-in. Regenerate it if `street-walk.mp4` is replaced (OpenCV LK flow → similarity transform per 2 frames: `[t, scale, rotDeg, txFrac, tyFrac]`).
@@ -46,14 +48,15 @@ The site lives under a sub-path, so **never hard-code `/assets/...` into the DOM
 - Don't invent personal details; mark guesses `draft: true` and ask. Don't bundle copyrighted audio.
 - Encode clips as H.264 MP4 with no audio, under ~4 MB, `-preset veryfast`.
 
-## Still to come from Shaun (as of 29 Oct)
+## Gifts per day (as agreed)
 
-- Real clues and answers
-- Wednesday:
-  - Nomiya booking time (484 New North Road, Kingsland)
-  - the glass-blowing studio's name and time
-- Memory photos and captions
-- Songs 2–4
-- Friends' video IDs
-- ASB Classic voucher details
-- Confirm the Friday sign-off and cocktails
+- Mon 2: something soft · reward: album 1 · Pink Pony Club plays on entry
+- Tue 3: bath fizz · reward: Caleb's tape · song: Rockstar
+- Wed 4 (Shaun's birthday): Nomiya 5pm, then glass blowing lesson at Monmouth Glass Studio 6pm · song: Hallelujah
+- Thu 5: cocktail night at home + wing foiling lessons for two at MadLoop (Lake Pupuke, date TBC), shown as a voucher on the menu · Ash's tape · song: 10 Drunk Cigarettes
+- Fri 6: ASB Classic Women's, two day-session tickets (4–10 Jan 2027, day TBC) + letter signed "Your Goose" · song: Can't Help Falling in Love
+
+## Still to come from Shaun (as of 30 Oct)
+
+- Photos for albums a1–a5, plus album titles and any captions
+- ASB Classic and wing foiling dates (both "to be confirmed" on screen for now)
