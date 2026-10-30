@@ -185,7 +185,6 @@ export const reveals: Reveals = {
         note: secret('Glass blowing lesson. Whatever you make, you keep.'),
         time: secret('6:00 pm'),
         address: secret('3 Central Road, Kingsland'),
-        draft: true, // time is their usual Wednesday class (6–8:30pm); confirm with the booking
       },
     ],
   },
@@ -199,14 +198,12 @@ export const reveals: Reveals = {
         glass: secret('Coupe'),
         ingredients: [secret('45 ml gin'), secret('20 ml elderflower liqueur'), secret('20 ml fresh lemon'), secret('Top with prosecco')],
         method: secret('Shake the first three hard with ice, strain into a chilled coupe, top with prosecco.'),
-        draft: true,
       },
       {
         name: secret('It’s Okay Fish'),
         glass: secret('Highball'),
         ingredients: [secret('50 ml dark rum'), secret('15 ml fresh lime'), secret('Ginger beer'), secret('Lime wedge')],
         method: secret('Build over ice: lime, ginger beer, then float the rum on top. Bad days don’t last forever.'),
-        draft: true,
       },
     ],
   },
@@ -218,7 +215,6 @@ export const reveals: Reveals = {
       title: secret('ASB Classic Women’s'),
       detail: secret('Two day-session tickets. Stanley Street, Auckland, 4–10 January 2027. We pick the day together.'),
       image: '',
-      draft: true,
     },
     signOff: [
       secret('Five days. Five clues. One very patient fish.'),
