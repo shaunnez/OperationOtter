@@ -5,6 +5,7 @@ import { useSyncExternalStore } from 'react'
 // closes it, leaves the bar, or plays something else.
 
 let on = false
+let player: (() => void) | null = null
 const listeners = new Set<() => void>()
 const emit = () => listeners.forEach((l) => l())
 
@@ -21,6 +22,19 @@ export const barMusic = {
   },
   get on() {
     return on
+  },
+  /** The preloaded jukebox registers itself so a tap can start it. */
+  registerPlayer(play: () => void) {
+    player = play
+    return () => {
+      if (player === play) player = null
+    }
+  },
+  /** Call straight from a tap handler: phones only let video start from a tap. */
+  kick(): boolean {
+    if (!player) return false
+    player()
+    return true
   },
 }
 

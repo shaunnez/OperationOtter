@@ -71,7 +71,9 @@ export default function App() {
     <NavCtx.Provider value={nav}>
       <div className="app" data-scene={scene}>
         {scene === 'street' ? <Street now={now} onEnter={enterBar} /> : <Bar now={now} onLeave={leaveBar} />}
-        {scene === 'bar' && musicOn && barSong?.youtubeId && isOpen(barSong.unlockAt, now) && <BarMusic song={barSong} />}
+        {barSong?.youtubeId && isOpen(barSong.unlockAt, now) && (scene === 'street' || musicOn) && (
+          <BarMusic song={barSong} visible={scene === 'bar' && musicOn} />
+        )}
         <Overlays stack={stack} now={now} />
         {timeTravelAllowed() && stack.length === 0 && <TimeMachine now={now} />}
       </div>

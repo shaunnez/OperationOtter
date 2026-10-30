@@ -7,13 +7,18 @@ import { timeTravelAllowed } from '../lib/time'
 const YT_ORIGIN = 'https://www.youtube-nocookie.com'
 
 /**
- * Small "now playing" card with a real YouTube player in it. It asks to
- * autoplay; Android Chrome allows that after her tap on the street. If the
- * phone refuses (iPhones usually do), YouTube's own play button shows in the
- * card and one tap starts it.
+ * "Now playing" strip with a real YouTube player in it. The player is loaded
+ * quietly (hidden) while she is still on the street, and the door tap starts
+ * it from inside the tap itself, which is the only way iPhones allow it. The
+ * strip then shows once she is in the bar. If the phone still refuses,
+ * YouTube's own play button shows in it and one tap starts it.
  */
-export function BarMusic({ song }: { song: Song }) {
+export function BarMusic({ song, visible }: { song: Song; visible: boolean }) {
   const frame = useRef<HTMLIFrameElement>(null)
+  const startedVisible = useRef(visible)
+  // A tap that came before the hidden player finished loading waits here
+  const ready = useRef(false)
+  const wantsPlay = useRef(false)
   const [playing, setPlaying] = useState(false)
   const [waited, setWaited] = useState(false)
   const [error, setError] = useState<number | null>(null)
@@ -30,6 +35,11 @@ export function BarMusic({ song }: { song: Song }) {
       try {
         data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
       } catch {
+        return
+      }
+      if (data.event === 'onReady') {
+        ready.current = true
+        flush()
         return
       }
       if (data.event === 'onError') {
@@ -49,6 +59,30 @@ export function BarMusic({ song }: { song: Song }) {
     return () => window.removeEventListener('message', onMsg)
   }, [])
 
+  const command = (func: string) => {
+    frame.current?.contentWindow?.postMessage(JSON.stringify({ event: 'command', func, args: [], id: 'bar-song', channel: 'widget' }), YT_ORIGIN)
+  }
+
+  const flush = () => {
+    if (!wantsPlay.current) return
+    wantsPlay.current = false
+    command('playVideo')
+  }
+
+  useEffect(
+    () =>
+      barMusic.registerPlayer(() => {
+        if (ready.current) command('playVideo')
+        else wantsPlay.current = true
+      }),
+    [],
+  )
+
+  // Left the bar (or closed it): stop the sound but keep the player loaded for next time
+  useEffect(() => {
+    if (!visible) command('pauseVideo')
+  }, [visible])
+
   useEffect(() => {
     ambience.duck(playing, 'bar-song')
     return () => ambience.duck(false, 'bar-song')
@@ -57,13 +91,15 @@ export function BarMusic({ song }: { song: Song }) {
   const listen = () => {
     const w = frame.current?.contentWindow
     if (!w) return
+    ready.current = true
+    flush()
     // Ask the player to post its state back to us
     w.postMessage(JSON.stringify({ event: 'listening', id: 'bar-song', channel: 'widget' }), YT_ORIGIN)
     w.postMessage(JSON.stringify({ event: 'command', func: 'addEventListener', args: ['onStateChange'], id: 'bar-song', channel: 'widget' }), YT_ORIGIN)
   }
 
   const params = new URLSearchParams({
-    autoplay: '1',
+    autoplay: startedVisible.current ? '1' : '0',
     playsinline: '1',
     rel: '0',
     modestbranding: '1',
@@ -74,7 +110,7 @@ export function BarMusic({ song }: { song: Song }) {
   if (song.start) params.set('start', String(song.start))
 
   return (
-    <div className={`barmusic ${playing ? 'is-playing' : ''}`} data-testid="bar-music">
+    <div className={`barmusic ${playing ? 'is-playing' : ''} ${visible ? '' : 'barmusic--armed'}`} data-testid={visible ? 'bar-music' : 'bar-music-armed'}>
       <div className="barmusic__screen">
         <iframe
           ref={frame}

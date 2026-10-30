@@ -2624,16 +2624,16 @@ img {
 .barmusic {
   position: absolute;
   z-index: 24;
-  left: 12px;
-  right: auto;
-  bottom: calc(var(--safe-b) + 14px);
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
-  gap: 10px;
-  max-width: calc(100% - 24px);
-  padding: 6px 6px 6px 6px;
+  gap: 12px;
+  padding: 10px 14px calc(var(--safe-b) + 10px);
   border: 1px solid rgba(255, 61, 127, 0.5);
-  border-radius: 14px;
+  border-width: 1px 0 0;
+  border-radius: 16px 16px 0 0;
   background: rgba(14, 7, 12, 0.82);
   box-shadow: 0 0 18px rgba(255, 61, 127, 0.3), 0 10px 24px rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(8px);
@@ -2655,6 +2655,7 @@ img {
   border: 0;
 }
 .barmusic__meta {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -2701,9 +2702,27 @@ img {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.55; }
 }
-/* The otter's line sits above the card while both are showing */
-.app:has(.barmusic) .narration {
-  bottom: calc(var(--safe-b) + 106px);
+/* While she's still on the street the player waits, loaded but unseen */
+.barmusic--armed {
+  left: 0;
+  right: auto;
+  bottom: 0;
+  z-index: -1;
+  width: 140px;
+  padding: 0;
+  border: 0;
+  opacity: 0.01;
+  pointer-events: none;
+  animation: none;
+  box-shadow: none;
+}
+.barmusic--armed .barmusic__meta,
+.barmusic--armed .barmusic__stop {
+  display: none;
+}
+/* The otter's line sits above the strip while both are showing */
+.app:has(.barmusic:not(.barmusic--armed)) .narration {
+  bottom: calc(var(--safe-b) + 110px);
 }
 
 /* ── Photo wall albums ── */

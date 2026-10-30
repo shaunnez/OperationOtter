@@ -5,6 +5,7 @@ import { Glows, Grain } from '../fx/Atmosphere'
 import { NeonSign } from '../fx/Neon'
 import { Rain } from '../fx/Rain'
 import { ambience } from '../lib/ambience'
+import { barMusic } from '../lib/barMusic'
 import { at } from '../lib/gating'
 import { usePrefersReducedMotion } from '../lib/useNow'
 import { Countdown, Logo } from '../ui/bits'
@@ -72,6 +73,8 @@ export function Street({ now, onEnter }: { now: Date; onEnter: () => void }) {
   const enter = () => {
     if (phase !== 'idle') return
     ambience.enable()
+    // Start the jukebox from inside this tap (iPhones only allow it from a tap)
+    if (barMusic.kick()) barMusic.start()
     const v = walkRef.current
     if (street.walkVideo && v && !reduced) {
       setPhase('walking')

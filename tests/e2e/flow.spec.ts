@@ -45,7 +45,7 @@ test('Monday: Pink Pony Club comes on as she walks in, clue 1 opens the first al
   await enterBar(page)
   const music = page.getByTestId('bar-music')
   await expect(music).toContainText('Pink Pony Club')
-  await expect(music.locator('iframe')).toHaveAttribute('src', /GR3Liudev18.*autoplay=1/)
+  await expect(music.locator('iframe')).toHaveAttribute('src', /GR3Liudev18/)
   await expect(spot(page, 'The jukebox')).toHaveAttribute('data-state', 'fresh')
   await expect(spot(page, 'The photo wall')).toHaveAttribute('data-state', 'fresh')
   await expect(spot(page, 'The old TV')).toHaveAttribute('data-state', 'locked')
@@ -62,6 +62,17 @@ test('Monday: Pink Pony Club comes on as she walks in, clue 1 opens the first al
   await page.getByRole('button', { name: 'Close album' }).click()
   await expect(page.getByTestId('album-a1')).toBeVisible()
   await expect(page.getByTestId('photos').locator('.pinned-photo.is-back')).toHaveCount(4)
+})
+
+test('the jukebox waits hidden on the street, then shows as a full-width strip in the bar', async ({ page }) => {
+  await page.goto(at('2026-11-02T07:00'))
+  await expect(page.getByTestId('bar-music-armed')).toHaveCount(1)
+  await expect(page.getByTestId('bar-music')).toHaveCount(0)
+  await enterBar(page)
+  await expect(page.getByTestId('bar-music-armed')).toHaveCount(0)
+  const box = await page.getByTestId('bar-music').boundingBox()
+  const vw = page.viewportSize()!.width
+  expect(box!.width).toBeGreaterThan(vw - 2)
 })
 
 test('the bar song stops for the jukebox and stays off once closed', async ({ page }) => {
