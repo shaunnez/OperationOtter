@@ -296,7 +296,7 @@ export const videos: Video[] = [
   { id: 'v5', from: secret('Jason and Emily'), youtubeId: 'hlL5xoHE_m4', portrait: true, unlockAt: '2026-11-03T06:00' },
   { id: 'v3', from: secret('Sinead and Greta'), youtubeId: 'nA5iSOmwGVA', portrait: true, unlockAt: '2026-11-04T06:00' },
   { id: 'v2', from: secret('Ash'), youtubeId: 'x1kODrxdEWE', portrait: true, unlockAt: '2026-11-05T06:00' },
-  { id: 'v6', from: secret('A friend'), youtubeId: 'GMvJxli424E', portrait: true, unlockAt: '2026-11-05T06:00' },
+  { id: 'v6', from: secret('Charlotte'), youtubeId: 'GMvJxli424E', portrait: true, unlockAt: '2026-11-05T06:00' },
   { id: 'v4', from: secret('Robyn'), youtubeId: 'j1iS7MXDQhU', portrait: true, unlockAt: '2026-11-06T06:00' },
 ]
 
